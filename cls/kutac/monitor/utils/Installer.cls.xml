@@ -640,6 +640,7 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
 	set Namespace = tInstaller.Evaluate("${Namespace}")
+	do tInstaller.PushNS("%SYS")
 	set cspProperties("NameSpace") = Namespace
 	set cspProperties("IsNameSpaceDefault") = $$$NO
 	set cspProperties("DispatchClass") = "kutac.REST.ConfigBroker"
@@ -647,9 +648,11 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 	set cspProperties("MatchRoles") = ":%All"
 	set cspProperties("CookiePath") = "/"
 	
-	set tSC = ##class(Security.Applications).Create("/"_$ZCONVERT(Namespace, "l"), .cspProperties)
+	set tSC = ##class(Security.Applications).Create("/sysmon", .cspProperties)
 	if $$$ISERR(tSC) throw ##class(%Installer.Exception).CreateFromStatus(tSC)
 	kill cspProperties, security
+	do tInstaller.PopNS()
+	
 	quit $$$OK
 ]]></Implementation>
 </Method>
