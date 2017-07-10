@@ -1,7 +1,5 @@
-<cspapp>/confpage.csp
 <cspapp>/index.html
 <cspapp>/lib
-<cspapp>/lib/css/bootstrap.min.css
 <cspapp>/src
 dash-actions-State Info.dashboard.dfi
 dash-perf-history-Dash1.dashboard.dfi
