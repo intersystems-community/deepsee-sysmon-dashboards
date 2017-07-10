@@ -34,11 +34,16 @@
 <Namespace Name="${Namespace}" Create="no">
 <Log Text="Creating web application /csp/${Namespace}" Level="0"/>
 
-<CSPApplication Url='#{$ZCONVERT("/csp/${Namespace}", "L")}' Directory='#{##class(%DeepSee.Report.UI.reportModelServer).GetCSPDirectory()_$ZCONVERT("${Namespace}", "L")}' AuthenticationMethods="64" IsNamespaceDefault="true" Recurse="true" Grant="%All"/>
+<CSPApplication Url='#{$ZCONVERT("/csp/${Namespace}", "L")}' Directory='#{##class(%DeepSee.Report.UI.reportModelServer).GetCSPDirectory()_$ZCONVERT("${Namespace}", "L")}' AuthenticationMethods="32" IsNamespaceDefault="true" Recurse="true" Grant="%All"/>
 <RunInstall Class="kutac.monitor.utils.Installer" Method="EnableDeepSee"/>
 
 <Log Text="End creating web application /csp/${Namespace}" Level="0"/>
 </Namespace>
+</If>
+
+<If Condition='(##class(Security.Applications).Exists($ZCONVERT("/sysmon", "L"))=0)'>
+<Log Text="Creating web application /sysmon" Level="0"/>
+<RunInstall Class="kutac.monitor.utils.Installer" Method="createBrokerApplication"/>
 </If>
 
 <Namespace Name="${Namespace}" Create="no" Code="${Namespace}" Data="${Namespace}" Ensemble="">
@@ -626,6 +631,26 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 <ClassMethod>1</ClassMethod>
 <FormalSpec>text:%String</FormalSpec>
 <Implementation><![CDATA[	w !, text, !
+]]></Implementation>
+</Method>
+
+<Method name="createBrokerApplication">
+<ClassMethod>1</ClassMethod>
+<FormalSpec>pVars,pLogLevel,tInstaller</FormalSpec>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	set Namespace = tInstaller.Evaluate("${Namespace}")
+	set cspProperties("NameSpace") = Namespace
+	set cspProperties("IsNameSpaceDefault") = $$$NO
+	set cspProperties("DispatchClass") = "kutac.REST.ConfigBroker"
+	set cspProperties("GroupById") = "sysmon"
+	set cspProperties("MatchRoles") = ":%All"
+	set cspProperties("CookiePath") = "/"
+	
+	set tSC = ##class(Security.Applications).Create("/"_$ZCONVERT(Namespace, "l"), .cspProperties)
+	if $$$ISERR(tSC) throw ##class(%Installer.Exception).CreateFromStatus(tSC)
+	kill cspProperties, security
+	quit $$$OK
 ]]></Implementation>
 </Method>
 
