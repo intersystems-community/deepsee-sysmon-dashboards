@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25">
+<Class name="kutac.REST.ConfigBroker">
+<IncludeCode>%ZEN.Utils</IncludeCode>
+<Super>%CSP.REST</Super>
+<TimeCreated>64469,36696.045094</TimeCreated>
+
+<XData name="UrlMap">
+<Data><![CDATA[
+<Routes>
+<Route Url="/classes" Method="GET" Call="getClasses"/>
+<Route Url="/class" Method="POST" Call="toggleClass"/>
+<Route Url="/mon" Method="GET" Call="checkMon"/>
+<Route Url="/mon" Method="POST" Call="toggleMon"/>
+<Route Url="/email" Method="GET" Call="getEmailSettings"/>
+<Route Url="/email" Method="POST" Call="setEmailSettings"/>
+<Route Url="/email_toggle" Method="POST" Call="toggleEmail"/>
+<Route Url="/test_mail" Method="GET" Call="testMail"/>
+<Route Url="/recipient" Method="GET" Call="getRecipients"/>
+<Route Url="/recipient" Method="POST" Call="addRecipient"/>
+<Route Url="/recipient" Method="DELETE" Call="deleteRecipient"/>
+</Routes>
+]]></Data>
+</XData>
+
+<Method name="getClasses">
+<ClassMethod>1</ClassMethod>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[	quit ##class(kutac.REST.Utils).getClasses()
+]]></Implementation>
+</Method>
+
+<Method name="toggleClass">
+<ClassMethod>1</ClassMethod>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	do ..ConvertRequestBody()
+	quit ##class(kutac.REST.Utils).toggleClass(%request.Content.classname, %request.Content.check)
+]]></Implementation>
+</Method>
+
+<Method name="checkMon">
+<ClassMethod>1</ClassMethod>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[	quit ##class(kutac.REST.Utils).checkMon()
+]]></Implementation>
+</Method>
+
+<Method name="toggleMon">
+<ClassMethod>1</ClassMethod>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	do ..ConvertRequestBody()
+	quit ##class(kutac.REST.Utils).toggleMon(%request.Content.toggle)
+]]></Implementation>
+</Method>
+
+<Method name="getEmailSettings">
+<ClassMethod>1</ClassMethod>
+<Implementation><![CDATA[	quit ##class(kutac.REST.Utils).getEmailSettings()
+]]></Implementation>
+</Method>
+
+<Method name="setEmailSettings">
+<ClassMethod>1</ClassMethod>
+<Implementation><![CDATA[
+	do ..ConvertRequestBody()	
+	set obj = %request.Content
+	
+	quit ##class(kutac.REST.Utils).setEmailSettings(obj)
+]]></Implementation>
+</Method>
+
+<Method name="toggleEmail">
+<ClassMethod>1</ClassMethod>
+<Implementation><![CDATA[
+	do ..ConvertRequestBody()
+	quit ##class(kutac.REST.Utils).toggleEmail(%request.Content.toggle)
+]]></Implementation>
+</Method>
+
+<Method name="getRecipients">
+<ClassMethod>1</ClassMethod>
+<Implementation><![CDATA[	quit ##class(kutac.REST.Utils).getRecipients()
+]]></Implementation>
+</Method>
+
+<Method name="addRecipient">
+<ClassMethod>1</ClassMethod>
+<Implementation><![CDATA[
+	do ..ConvertRequestBody()
+	quit ##class(kutac.REST.Utils).addRecipient(%request.Content.rec)
+]]></Implementation>
+</Method>
+
+<Method name="deleteRecipient">
+<ClassMethod>1</ClassMethod>
+<Implementation><![CDATA[
+	do ..ConvertRequestBody()
+	quit ##class(kutac.REST.Utils).deleteRecipient(%request.Content.rec)
+]]></Implementation>
+</Method>
+
+<Method name="testMail">
+<ClassMethod>1</ClassMethod>
+<Implementation><![CDATA[	quit ##class(kutac.REST.Utils).testMail()
+]]></Implementation>
+</Method>
+
+<Method name="ConvertRequestBody">
+<ClassMethod>1</ClassMethod>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	#dim %request As %CSP.Request
+	#dim obj As %ZEN.proxyObject
+
+	return:'$isobject(%request.Content) $$$OK //empty request body - nothing to do
+
+	// Convert request body into UTF8 proxyObject
+	set content = %request.Content.Read($$$MaxStringLength)
+	set content = $ZCVT(content,"I","UTF8")
+	set st = ##class(%ZEN.Auxiliary.jsonProvider).%ConvertJSONToObject(content,,.obj,1)
+	return:$$$ISERR(st) st
+	return:'$IsObject(obj) $$$ERROR($$$ArgumentIsNotAnObject,"Body")
+
+	set %request.Content = obj // obj here is a valid UTF8 proxyObject with required property
+	return $$$OK
+]]></Implementation>
+</Method>
+
+<Parameter name="CHARSET">
+<Description><![CDATA[
+Specifies the default character set for the page.  This can be overriden using the
+&lt;CSP:CONTENT CHARSET=&gt; tag, or by setting the <b>%response</b>.CharSet property
+in the <method>OnPreHTTP</method> method.  If this parameter is not specified, then
+for the default charset is utf-8.]]></Description>
+<Default>UTF-8</Default>
+</Parameter>
+</Class>
+</Export>

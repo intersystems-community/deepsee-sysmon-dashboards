@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25">
+<CSP name="lib/css/style.css" application="/csp/devsysmon/" default="1"><![CDATA[
+.btn.btn-inline { margin: 0 1px; }
+
+.recipient {
+    border: #ccc 1px solid;
+    border-radius: 2px;
+    margin: 2px 0;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.animate-show-hide.ng-hide {
+    opacity: 0;
+}
+
+.animate-show-hide.ng-hide-add,
+.animate-show-hide.ng-hide-remove {
+    transition: all linear 0.5s;
+}
+
+.check-element {
+    opacity: 1;
+}]]></CSP>
+</Export>

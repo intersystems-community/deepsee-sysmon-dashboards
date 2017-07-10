@@ -511,8 +511,8 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 <FormalSpec>pVars,pLogLevel,tInstaller</FormalSpec>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
-	Set Namespace=tInstaller.Evaluate("${Namespace}")
-	Do tInstaller.PushNS("%SYS")
+	set Namespace=tInstaller.Evaluate("${Namespace}")
+	do tInstaller.PushNS("%SYS")
 	
 	do ..WriteLog("Activating Monitor Classes")
 	set st2 = ..ActivatingClasses()
@@ -521,9 +521,9 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 	set st3 = ..RunningMonitor()
 	
 	&sql(select id into :TaskID from %SYS.Task where Name = 'Rebuild SYSMON Cubes')
-	Do tInstaller.PopNS()
+	do tInstaller.PopNS()
 	
-	Do tInstaller.PushNS(Namespace)
+	do tInstaller.PushNS(Namespace)
 	if +SQLCODE {
 		do ..WriteLog("Creating Task")
 		Do ##class(kutac.monitor.task.Builder).Setup()
@@ -532,7 +532,13 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 		do ##class(%SYS.Task).RunNow(TaskID)
 	}
 	
-	Do tInstaller.PopNS()
+	do tInstaller.PopNS()
+	
+	do tInstaller.PushNS("%SYS")
+	set SSLConfig = "EmailDefault"
+	do:'##class(Security.SSLConfigs).Exists(SSLConfig) ##class(Security.SSLConfigs).Create(SSLConfig)
+	do ##class(%Monitor.Manager).AppSmtpServer(,,.SSLConfig)
+	do tInstaller.PopNS()
 		
 	set st = $$$ADDSC(st2, st3)
 	if $$$ISERR(st) Throw ##class(%Installer.Exception).CreateFromStatus(st)

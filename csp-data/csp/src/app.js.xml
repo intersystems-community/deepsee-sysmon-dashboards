@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25">
+<CSP name="src/app.js" application="/csp/devsysmon/" default="1"><![CDATA[
+/**
+ * Created by Admin on 05.07.2017.
+ */
+(function(){
+    'use strict'
+    angular.module('app',['ngRoute' ,'cgNotify' , 'ngAnimate', 'ui.bootstrap'])
+        .config(['$routeProvider', function ($routeProvider) {
+            $routeProvider
+                .when('/',{
+                    templateUrl: 'src/views/config.html',
+                    controller: 'config'
+                })
+                .when('/email',{
+                    templateUrl: 'src/views/email.html',
+                    controller: 'email'
+                })
+                .otherwise({ redirectTo: '/' });
+        }])
+        .constant('CONST',{
+            title: 'SYSMONConfigurator UI',
+            version: '1.0',
+            protocol: location.protocol,
+            host: location.host,
+            appname: 'sysmon'
+        })
+        .run(['notify', function (notify) {
+            notify.config({
+                duration: 5000,
+                position: 'right',
+                maximumOpen: 5,
+                verticalSpacing: 20,
+                startTop: 20
+            });
+        }]);
+})();]]></CSP>
+</Export>

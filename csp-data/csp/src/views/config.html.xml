@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25">
+<CSP name="src/views/config.html" application="/csp/devsysmon/" default="1"><![CDATA[
+<div class="container">
+    <div class="row">
+        <div class="col-md-offset-4 col-md-4" align="center">
+            <div class="row">
+                <div class="row">
+                    <h4><b>Sysmon Application Classes configuration:</b></h4>
+                </div>
+                <div class="row animate-repeat" ng-repeat="class in model.classes">
+                    <div>
+                        <span class="input-group-addon" style="border-right: 0; text-align: left" ><input type="checkbox" ng-model="class.checked" ng-click="classChk($index)"></span>
+                        <span class="input-group-addon" style="border-left: 0; text-align: left"><a href="" ng-click="docLoc($index)">{{class.name}}</a></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin: 3em 0;">
+                <div class="row">
+                    <h4><b>Control System Monitor:</b></h4>
+                </div>
+                <div id="btn_panel" class="row">
+                    <button class="btn btn-primary" ng-click="startMon();">Start SYSMON</button>
+                    <button class="btn btn-danger" ng-click="stopMon();">Stop SYSMON</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>]]></CSP>
+</Export>

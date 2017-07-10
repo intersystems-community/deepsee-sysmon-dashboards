@@ -1,5 +1,8 @@
 <cspapp>/confpage.csp
+<cspapp>/index.html
+<cspapp>/lib
 <cspapp>/lib/css/bootstrap.min.css
+<cspapp>/src
 dash-actions-State Info.dashboard.dfi
 dash-perf-history-Dash1.dashboard.dfi
 dash-perf-history-ECP.dashboard.dfi
@@ -15,6 +18,8 @@ dash-sys-history-System Dashboard 2.dashboard.dfi
 dash-sys-history-System Dashboard 3.dashboard.dfi
 dash-sys-history-WD Cycle Buffers.dashboard.dfi
 dash-sys-history-WD Cycle Timers.dashboard.dfi
+kutac.REST.ConfigBroker.cls
+kutac.REST.Utils.cls
 kutac.monitor.cubes.CurrentSysDataDB.cls
 kutac.monitor.cubes.HistoryPerfData.cls
 kutac.monitor.cubes.HistoryPerfDataWD.cls

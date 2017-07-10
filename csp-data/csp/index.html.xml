@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25">
+<CSP name="index.html" application="/csp/devsysmon/" default="1"><![CDATA[
+<!doctype html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>SYSMONConfigurator UI</title>
+
+    <link rel="stylesheet" href="lib/css/angular-notify.min.css">
+    <link rel="stylesheet" href="lib/css/bootstrap.min.css">
+    <link rel="stylesheet" href="lib/css/style.css">
+
+    <script src="lib/js/angular.min.js"></script>
+    <script src="lib/js/angular-route.min.js"></script>
+    <script src="lib/js/angular-animate.min.js"></script>
+    <script src="lib/js/angular-notify.min.js"></script>
+    <script src="lib/js/ui-bootstrap-tpls.min.js"></script>
+
+    <!--build app.js-->
+    <script src="src/app.js"></script>
+    <script src="src/controllers/menu.js"></script>
+    <script src="src/controllers/config.js"></script>
+    <script src="src/controllers/email.js"></script>
+    <!--build app.js-->
+
+</head>
+<body>
+    <div ng-include="'src/views/menu.html'"></div>
+    <div ng-view=""></div>
+</body>
+</html>]]></CSP>
+</Export>
