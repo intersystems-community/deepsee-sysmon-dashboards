@@ -100,7 +100,7 @@ Cube definition from Architect.</Description>
   </calculatedMember>
   <calculatedMember name="ID" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrPerfData&quot;,&quot;ID&quot;,1)" hidden="false">
   </calculatedMember>
-  <calculatedMember name="Perf_PhysWrites" displayName="Phys Reads" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrPerfData&quot;,&quot;PerfPhysWrites&quot;,1)" formatString="#,#" hidden="false">
+  <calculatedMember name="Perf_PhysWrites" displayName="Phys Writes" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrPerfData&quot;,&quot;PerfPhysWrites&quot;,1)" formatString="#,#" hidden="false">
   </calculatedMember>
   <calculatedMember name="Perf_WIJWrites" displayName="WIJ Writes" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrPerfData&quot;,&quot;PerfWIJWrites&quot;,1)" formatString="#,#" hidden="false">
   </calculatedMember>
