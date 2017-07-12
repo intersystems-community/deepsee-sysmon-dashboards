@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Export generator="Cache" version="25">
 <Class name="kutac.REST.ConfigBroker">
+<Import>kutac.REST</Import>
 <IncludeCode>%ZEN.Utils</IncludeCode>
 <Super>%CSP.REST</Super>
 <TimeCreated>64469,36696.045094</TimeCreated>
@@ -26,7 +27,7 @@
 <Method name="getClasses">
 <ClassMethod>1</ClassMethod>
 <ReturnType>%Status</ReturnType>
-<Implementation><![CDATA[	quit ##class(kutac.REST.Utils).getClasses()
+<Implementation><![CDATA[	quit ##class(Utils).getClasses()
 ]]></Implementation>
 </Method>
 
@@ -35,14 +36,14 @@
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
 	do ..ConvertRequestBody()
-	quit ##class(kutac.REST.Utils).toggleClass(%request.Content.classname, %request.Content.check)
+	quit ##class(Utils).toggleClass(%request.Content.classname, %request.Content.check)
 ]]></Implementation>
 </Method>
 
 <Method name="checkMon">
 <ClassMethod>1</ClassMethod>
 <ReturnType>%Status</ReturnType>
-<Implementation><![CDATA[	quit ##class(kutac.REST.Utils).checkMon()
+<Implementation><![CDATA[	quit ##class(Utils).checkMon()
 ]]></Implementation>
 </Method>
 
@@ -51,7 +52,7 @@
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
 	do ..ConvertRequestBody()
-	quit ##class(kutac.REST.Utils).toggleMon(%request.Content.toggle)
+	quit ##class(Utils).toggleMon(%request.Content.toggle)
 ]]></Implementation>
 </Method>
 
@@ -67,7 +68,7 @@
 	do ..ConvertRequestBody()	
 	set obj = %request.Content
 	
-	quit ##class(kutac.REST.Utils).setEmailSettings(obj)
+	quit ##class(Utils).setEmailSettings(obj)
 ]]></Implementation>
 </Method>
 
@@ -75,13 +76,13 @@
 <ClassMethod>1</ClassMethod>
 <Implementation><![CDATA[
 	do ..ConvertRequestBody()
-	quit ##class(kutac.REST.Utils).toggleEmail(%request.Content.toggle)
+	quit ##class(Utils).toggleEmail(%request.Content.toggle)
 ]]></Implementation>
 </Method>
 
 <Method name="getRecipients">
 <ClassMethod>1</ClassMethod>
-<Implementation><![CDATA[	quit ##class(kutac.REST.Utils).getRecipients()
+<Implementation><![CDATA[	quit ##class(Utils).getRecipients()
 ]]></Implementation>
 </Method>
 
@@ -89,7 +90,7 @@
 <ClassMethod>1</ClassMethod>
 <Implementation><![CDATA[
 	do ..ConvertRequestBody()
-	quit ##class(kutac.REST.Utils).addRecipient(%request.Content.rec)
+	quit ##class(Utils).addRecipient(%request.Content.rec)
 ]]></Implementation>
 </Method>
 
@@ -97,13 +98,13 @@
 <ClassMethod>1</ClassMethod>
 <Implementation><![CDATA[
 	do ..ConvertRequestBody()
-	quit ##class(kutac.REST.Utils).deleteRecipient(%request.Content.rec)
+	quit ##class(Utils).deleteRecipient(%request.Content.rec)
 ]]></Implementation>
 </Method>
 
 <Method name="testMail">
 <ClassMethod>1</ClassMethod>
-<Implementation><![CDATA[	quit ##class(kutac.REST.Utils).testMail()
+<Implementation><![CDATA[	quit ##class(Utils).testMail()
 ]]></Implementation>
 </Method>
 

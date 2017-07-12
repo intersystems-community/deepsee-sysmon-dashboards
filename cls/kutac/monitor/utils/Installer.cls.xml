@@ -642,6 +642,7 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 	set Namespace = tInstaller.Evaluate("${Namespace}")
 	do tInstaller.PushNS("%SYS")
 	set cspProperties("NameSpace") = Namespace
+	set cspProperties("AutheEnabled") = $$$AutheCache
 	set cspProperties("IsNameSpaceDefault") = $$$NO
 	set cspProperties("DispatchClass") = "kutac.REST.ConfigBroker"
 	set cspProperties("GroupById") = "sysmon"
