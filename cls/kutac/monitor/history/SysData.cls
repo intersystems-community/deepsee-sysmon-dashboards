@@ -1,0 +1,32 @@
+Class kutac.monitor.history.SysData Extends %DeepSee.DataConnector
+{
+
+Parameter SUPPORTSIDLIST = 1;
+
+XData SourceQuery [ XMLNamespace = "http://www.intersystems.com/deepsee/connector/query" ]
+{
+<sql>SELECT * FROM SYS_History.SysData</sql>
+}
+
+XData Output [ XMLNamespace = "http://www.intersystems.com/deepsee/connector/output" ]
+{
+<connector>
+<property name="%ID" sourceProperty="ID" description="Record ID" />
+<property name="mTS" sourceProperty="DateTime" type="%TimeStamp" description="Measurement DateTime"/>
+<property name="SysAlerts" sourceProperty="Sys_Alerts" type="%Numeric" description="No. of serious alerts"/>
+<property name="SysAppErrors" sourceProperty="Sys_AppErrors" type="%Numeric" description="No. of errors"/>
+<property name="SysCPUIdle" sourceProperty="Sys_CPUIdle" type="%Numeric" description="CPU idle mode time %"/>
+<property name="SysCPUKernel" sourceProperty="Sys_CPUKernel" type="%Numeric" description="CPU kernel mode time %"/>
+<property name="SysCPUUser" sourceProperty="Sys_CPUUser" type="%Numeric" description="CPU user mode time %"/>
+<property name="SysCSPSession" sourceProperty="Sys_CSPSession" type="%Numeric" description="No. of open CSP sessions"/>
+<property name="SysECPResponse" sourceProperty="Sys_ECPResponse" type="%Numeric" description="ECP Response time"/>
+<property name="SysJrnFiles" sourceProperty="Sys_JrnFiles" type="%Numeric" description="No. of journal files"/>
+<property name="SysJrnSize" sourceProperty="Sys_JrnSize" type="%Numeric" description="Total size of journal files (in MB)"/>
+<property name="SysLicUsedDist" sourceProperty="Sys_LicUsedDist" type="%Numeric" description="License count used (local)"/>
+<property name="SysLicUsedLocal" sourceProperty="Sys_LicUsedLocal" type="%Numeric" description="License count used (distributed)"/>
+<property name="SysProcesses" sourceProperty="Sys_Processes" type="%Numeric" description="No. of running processes"/>
+</connector>
+}
+
+}
+

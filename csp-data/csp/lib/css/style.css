@@ -1,0 +1,22 @@
+.btn.btn-inline { margin: 0 1px; }
+
+.recipient {
+    border: #ccc 1px solid;
+    border-radius: 2px;
+    margin: 2px 0;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.animate-show-hide.ng-hide {
+    opacity: 0;
+}
+
+.animate-show-hide.ng-hide-add,
+.animate-show-hide.ng-hide-remove {
+    transition: all linear 0.5s;
+}
+
+.check-element {
+    opacity: 1;
+}
