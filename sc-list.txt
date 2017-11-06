@@ -75,6 +75,7 @@ pivots-monitor-history-SysLicUsed.pivot.dfi
 pivots-monitor-history-SysVarious.pivot.dfi
 pivots-monitor-history-fortc-CPUUtilization.pivot.dfi
 pivots-monitor-history-fortc-CPUUtilization_Hours.pivot.dfi
+pivots-monitor-history-fortc-CPUUtilization Hours.pivot.dfi
 pivots-monitor-history-fortc-GloReadWriteMinutes.pivot.dfi
 pivots-monitor-history-fortc-GloRefMinutes.pivot.dfi
 pivots-monitor-history-fortc-JrnSizeTC.pivot.dfi
