@@ -260,19 +260,27 @@ ClassMethod CopyClasses(pVars, pLogLevel, tInstaller)
 ClassMethod CopyDFI(pVars, pLogLevel, tInstaller)
 {
 	set sc = $$$OK
-	
 	set i = 0
+	
 	while 1 {
 		set id = "SYSMON.DFIData||File" _ i
 		if (##class(%Dictionary.CompiledXData).%ExistsId(id) = 0) Q		
 		set dfi = ##class(%Dictionary.CompiledXData).%OpenId(id)
-		
 		set data = ##class(%GlobalCharacterStream).%New()
 		do data.Clear()
-		do data.Write($zconvert(dfi.Data.Read(dfi.Data.Size), "O", "UTF8"))
 		
-		set dfiName = $piece(dfi.Description,".",1)
-		
+		do data.Write(
+			$System.Encryption.Base64Decode(
+				$zconvert(
+					dfi.Data.Read(dfi.Data.Size), 
+					"O", 
+					"UTF8"
+					)
+				)
+			)
+			
+		set dfiName = dfi.Description
+				
 		set Namespace = tInstaller.Evaluate("${Namespace}")
 		do tInstaller.PushNS(Namespace)
 		
@@ -280,21 +288,21 @@ ClassMethod CopyDFI(pVars, pLogLevel, tInstaller)
 			try {
 		        set tDoc = ##class(%DeepSee.UI.FolderItemDocument).%New(dfiName)
 		        set sc = tDoc.ImportFromXML(data)
-		        
 		        set sc = tDoc.Save()
 		        do tInstaller.Log(pLogLevel, "Creating DFI", dfiName)
 		    } Catch e {
 		        set sc = e.AsStatus()
+		        quit
 		    }
 		} else {
 			try {
 				set tDoc = ##class(%DeepSee.UI.FolderItemDocument).%OpenId(dfiName)
 				set sc = tDoc.ImportFromXML(data)
-				
 				set sc = tDoc.Save()
 				do tInstaller.Log(pLogLevel, "Creating DFI", dfiName)
 			} Catch e {
 		        set sc = e.AsStatus()
+		        quit
 		    }
 		}
 		
@@ -303,7 +311,7 @@ ClassMethod CopyDFI(pVars, pLogLevel, tInstaller)
 		set i = i + 1
 	}
 	
-	quit $$$OK
+	quit sc
 }
 
 ClassMethod CopyFiles(pVars, pLogLevel, tInstaller)

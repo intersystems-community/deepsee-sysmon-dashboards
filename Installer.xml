@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2017.1 (Build 730U)" ts="2017-09-10 21:43:33">
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2017.1 (Build 730U)" ts="2017-11-06 20:47:48">
 <Class name="kutac.monitor.utils.Installer">
-<TimeChanged>64536,78183.96318</TimeChanged>
+<TimeChanged>64593,74404.434052</TimeChanged>
 <TimeCreated>63732,50627.865496</TimeCreated>
 
 <XData name="Install">
@@ -300,19 +300,27 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 <FormalSpec>pVars,pLogLevel,tInstaller</FormalSpec>
 <Implementation><![CDATA[
 	set sc = $$$OK
-	
 	set i = 0
+	
 	while 1 {
 		set id = "SYSMON.DFIData||File" _ i
 		if (##class(%Dictionary.CompiledXData).%ExistsId(id) = 0) Q		
 		set dfi = ##class(%Dictionary.CompiledXData).%OpenId(id)
-		
 		set data = ##class(%GlobalCharacterStream).%New()
 		do data.Clear()
-		do data.Write($zconvert(dfi.Data.Read(dfi.Data.Size), "O", "UTF8"))
 		
-		set dfiName = $piece(dfi.Description,".",1)
-		
+		do data.Write(
+			$System.Encryption.Base64Decode(
+				$zconvert(
+					dfi.Data.Read(dfi.Data.Size), 
+					"O", 
+					"UTF8"
+					)
+				)
+			)
+			
+		set dfiName = dfi.Description
+				
 		set Namespace = tInstaller.Evaluate("${Namespace}")
 		do tInstaller.PushNS(Namespace)
 		
@@ -320,21 +328,21 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 			try {
 		        set tDoc = ##class(%DeepSee.UI.FolderItemDocument).%New(dfiName)
 		        set sc = tDoc.ImportFromXML(data)
-		        
 		        set sc = tDoc.Save()
 		        do tInstaller.Log(pLogLevel, "Creating DFI", dfiName)
 		    } Catch e {
 		        set sc = e.AsStatus()
+		        quit
 		    }
 		} else {
 			try {
 				set tDoc = ##class(%DeepSee.UI.FolderItemDocument).%OpenId(dfiName)
 				set sc = tDoc.ImportFromXML(data)
-				
 				set sc = tDoc.Save()
 				do tInstaller.Log(pLogLevel, "Creating DFI", dfiName)
 			} Catch e {
 		        set sc = e.AsStatus()
+		        quit
 		    }
 		}
 		
@@ -343,7 +351,7 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 		set i = i + 1
 	}
 	
-	quit $$$OK
+	quit sc
 ]]></Implementation>
 </Method>
 
